@@ -3,6 +3,10 @@ import os, sys
 import ctypes
 import time
 
+#File:  shutdown.py
+#Purpose:  Contains python routines to shut the robot down ibn 2 minutes
+#Writte by:  Perry Team 1 (2022)
+
 KIPR=ctypes.CDLL("/usr/lib/libkipr.so")
     
 def shut_down():
