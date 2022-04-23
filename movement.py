@@ -1,4 +1,9 @@
 #!/usr/bin/python
+
+#File:  movement.py
+#Purpose:  Contains the code for moving our small non-create robot
+#Written by:  Perry Team 1 (2022)
+
 import os, sys
 from constants import *
 import ctypes
@@ -89,8 +94,41 @@ def backward_to_black(speed):
 		pass
         
 	KIPR.mav(LM, 0)
-	KIPR.mav(RM, 0)		
+	KIPR.mav(RM, 0)
+            
+def right_to_black(speed):
+	KIPR.mav(LM, speed)
+	KIPR.mav(RM, -speed)
+	while KIPR.analog(FRONT_LINE) < BLACK_THRESH:
+		pass
         
+	KIPR.mav(LM, 0)
+	KIPR.mav(RM, 0)	
+            
+def left_to_black(speed):
+	KIPR.mav(LM, -speed)
+	KIPR.mav(RM, speed)
+	while KIPR.analog(FRONT_LINE) < BLACK_THRESH:
+		pass
+        
+	KIPR.mav(LM, 0)
+	KIPR.mav(RM, 0)	
+            
+def line_follow_ticks(speed, ticks):
+	KIPR.cmpc(LM)
+	KIPR.cmpc(RM)
+
+	while KIPR.gmpc(LM) < ticks:
+
+		if KIPR.analog(FRONT_LINE) > BLACK_THRESH:    # we see black so drift left
+			KIPR.mav(LM,speed-300)
+			KIPR.mav(RM,speed+300)
+		else: #we are over white, drift right
+			KIPR.mav(LM,speed+300)
+			KIPR.mav(RM,speed-300)
+	KIPR.mav(LM, 0)
+	KIPR.mav(RM,0)      
+
 	
 
 
